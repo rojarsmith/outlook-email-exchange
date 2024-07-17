@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pywin32 = "*"
 jproperties = "*"
+requests = "*"
+mailjet-rest = "*"
 
 [dev-packages]
 

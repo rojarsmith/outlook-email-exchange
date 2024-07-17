@@ -18,6 +18,8 @@ with open("config.properties", "r+b") as f:
     smtp_password = p.properties.get("smtp.password")
     mailjet_api_key = p.properties.get("mailjet.api.key")
     mailjet_api_secret = p.properties.get("mailjet.api.secret")
+    mailgun_domain = p.properties.get("mailgun.domain")
+    mailgun_api = p.properties.get("mailgun.api")
     recipient = p.properties.get("recipient")
 
 
@@ -68,30 +70,35 @@ def send_notification(subject, body):
     if exchange_mode == "mailjet":
         api_key = mailjet_api_key
         api_secret = mailjet_api_secret
-        mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+        mailjet = Client(auth=(api_key, api_secret), version="v3.1")
         data = {
-            'Messages': [
+            "Messages": [
                 {
-                    "From": {
-                        "Email": smtp_user,
-                        "Name": "Rojar Smith"
-                              },
-          "To": [
-            {
-              "Email": recipient,
-              "Name": "Rojar"
-            }
-            ],
+                    "From": {"Email": smtp_user, "Name": "Rojar Smith"},
+                    "To": [{"Email": recipient, "Name": "Rojar"}],
                     "Subject": subject,
                     "TextPart": "My first Mailjet email",
                     "HTMLPart": body,
-                    "CustomID": "AppGettingStartedTest"
+                    "CustomID": "AppGettingStartedTest",
                 }
             ]
         }
         result = mailjet.send.create(data=data)
         print(result.status_code)
-        print(result.json())       
+        print(result.json())
+
+    if exchange_mode == "mailgun":
+        status = requests.post(
+            "https://api.mailgun.net/v3/" + mailgun_domain + "/messages",
+            auth=("api", mailgun_api),
+            data={
+                "from": "Excited User <mailgun@" + mailgun_domain + ">",
+                "to": [recipient],
+                "subject": "Hello",
+                "text": "Testing some Mailgun awesomeness!",
+            },
+        )
+        print(status)
 
 
 if __name__ == "__main__":

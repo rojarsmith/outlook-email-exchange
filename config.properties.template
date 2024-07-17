@@ -1,6 +1,14 @@
+exchange.mode=
+
 smtp.server=
 smtp.port=
 smtp.user=
 smtp.password=
+
+mailjet.api.key=
+mailjet.api.secret=
+
+mailgun.domain=
+mailgun.api=
 
 recipient=

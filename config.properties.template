@@ -1,14 +1,30 @@
+# smtp | mailjet | mailgun | courierhub
 exchange.mode=
 
+# ---- Common ----
+recipient=
+sender.name=
+# Defaults to smtp.user when empty. Must be a verified sender for Mailjet.
+sender.email=
+# Comma-separated. Mail whose body contains any keyword is NOT forwarded.
+filter.keywords=member@digitimes.com
+
+# ---- SMTP (e.g. GoDaddy: smtpout.secureserver.net / 465) ----
 smtp.server=
 smtp.port=
 smtp.user=
 smtp.password=
+# auto (465 -> ssl, others -> starttls) | ssl | starttls
+smtp.security=auto
 
+# ---- Mailjet ----
 mailjet.api.key=
 mailjet.api.secret=
 
+# ---- Mailgun ----
 mailgun.domain=
 mailgun.api=
 
-recipient=
+# ---- Courier Hub ----
+courierhub.url=
+courierhub.api.key=
